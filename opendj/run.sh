@@ -21,7 +21,7 @@ if [ ! -d ./data/config ] ; then
   BOOTSTRAP=${BOOTSTRAP:-/opt/opendj/bootstrap/setup.sh}
 
   # Set a default base DN. Setup scripts can choose to override this.
-  export BASE_DN=${BASE_DN:-"dc=example,dc=com"}
+  export BASE_DN=${BASE_DN:-"dc=mydomain,dc=com"}
   # If a password file is mounted, grab the password from that, otherwise default
   PW=`cat $DIR_MANAGER_PW_FILE`
   export PASSWORD=${PW:-password}
