@@ -15,8 +15,8 @@ cd /opt/opendj
 
 
 # Instance dir does not exist? Then we need to run setup
-if [ ! -d ./data/config ] ; then
-  echo "Instance data Directory is empty. Creating new DJ instance"
+#if [ ! -d ./data/config ] ; then
+#  echo "Instance data Directory is empty. Creating new DJ instance"
 
   BOOTSTRAP=${BOOTSTRAP:-/opt/opendj/bootstrap/setup.sh}
 
@@ -33,7 +33,7 @@ if [ ! -d ./data/config ] ; then
    if [ ! -z ${DJ_MASTER_SERVER+x} ];  then
       /opt/opendj/bootstrap/replicate.sh $DJ_MASTER_SERVER
    fi
-fi
+#fi
 
 # Check if keystores are mounted as a volume, and if so
 # Copy any keystores over
@@ -49,14 +49,14 @@ fi
 # Run upgrade if the server is older
 
 
-if (bin/status -n | grep Started) ; then
-   # A restart is needed to ensure we pick up any JVM env var args
-   echo "Restarting OpenDJ after installation."
-   bin/stop-ds
-fi
+#if (bin/status -n | grep Started) ; then
+#   # A restart is needed to ensure we pick up any JVM env var args
+#   echo "Restarting OpenDJ after installation."
+#   bin/stop-ds
+#fi
 
 
-echo "Starting OpenDJ"
+echo "Starting OpenDJ Proxy Server"
 
 #
 
