@@ -15,13 +15,13 @@ cd /opt/opendj
 
 
 # Instance dir does not exist? Then we need to run setup
-#if [ ! -d ./data/config ] ; then
-#  echo "Instance data Directory is empty. Creating new DJ instance"
+if [ ! -d ./data/config ] ; then
+  echo "Instance data Directory is empty. Creating new DJ instance"
 
   BOOTSTRAP=${BOOTSTRAP:-/opt/opendj/bootstrap/setup.sh}
 
   # Set a default base DN. Setup scripts can choose to override this.
-  export BASE_DN=${BASE_DN:-"dc=example,dc=com"}
+ export BASE_DN=${BASE_DN:-"dc=example,dc=com"}
   # If a password file is mounted, grab the password from that, otherwise default
   PW=`cat $DIR_MANAGER_PW_FILE`
   export PASSWORD=${PW:-password}
@@ -29,11 +29,13 @@ cd /opt/opendj
    echo "Running $BOOTSTRAP"
    sh "${BOOTSTRAP}"
 
-   # Check if DJ_MASTER_SERVER var is set. If it is - replicate to that server
-   if [ ! -z ${DJ_MASTER_SERVER+x} ];  then
-      /opt/opendj/bootstrap/replicate.sh $DJ_MASTER_SERVER
-   fi
+#   # Check if DJ_MASTER_SERVER var is set. If it is - replicate to that server
+#   if [ ! -z ${DJ_MASTER_SERVER+x} ];  then
+#      /opt/opendj/bootstrap/replicate.sh $DJ_MASTER_SERVER
+#   fi
 #fi
+echo "Running setup..."
+sh /opt/opendj/bootstrap/setup.sh}
 
 # Check if keystores are mounted as a volume, and if so
 # Copy any keystores over
@@ -49,11 +51,11 @@ fi
 # Run upgrade if the server is older
 
 
-#if (bin/status -n | grep Started) ; then
-#   # A restart is needed to ensure we pick up any JVM env var args
-#   echo "Restarting OpenDJ after installation."
-#   bin/stop-ds
-#fi
+if (bin/status -n | grep Started) ; then
+   # A restart is needed to ensure we pick up any JVM env var args
+   echo "Restarting OpenDJ after installation."
+   bin/stop-ds
+fi
 
 
 echo "Starting OpenDJ Proxy Server"

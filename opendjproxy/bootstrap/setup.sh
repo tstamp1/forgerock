@@ -14,7 +14,7 @@ echo "Setting up OpenDJ Proxy Server."
 #fi
 
 # todo: We may want to specify a keystore using --usePkcs12keyStore, --useJavaKeystore
-/path/to/opendj/setup \
+/opt/opendj/bin/setup \
  proxy-server \
  --rootUserDN "cn=Directory Manager" \
  --rootUserPassword "$PASSWORD" \
@@ -23,17 +23,13 @@ echo "Setting up OpenDJ Proxy Server."
  --ldapsPort 1636 \
  --adminConnectorPort 4444 \
  --staticPrimaryServer opendjuser-0.opendjuser.dev.svc.cluster.local:1636 \
- #--staticPrimaryServer local-data-center-ldap2.example.com:636 \
- #--staticSecondaryServer remote-data-center-ldap1.example.com:636 \
- #--staticSecondaryServer remote-data-center-ldap2.example.com:636 \
  --baseDN $BASE_DN \
- #--proxyUserBindDN cn=Proxy,ou=Apps,dc=example,dc=com \
  --proxyUserBindDN "cn=Directory Manager" \
  --proxyUserBindPassword "$PASSWORD" \
  --proxyUsingSSL \
- --useJvmTrustStore \
  --acceptLicense
 
+echo "Set up of OpenDJ Proxy Server complete."
 
 # If any optional LDIF files are present, load them.
 
