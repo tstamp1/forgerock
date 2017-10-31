@@ -14,6 +14,7 @@ echo "Setting up OpenDJ Proxy Server."
 #fi
 
 # todo: We may want to specify a keystore using --usePkcs12keyStore, --useJavaKeystore
+echo "Creating Proxy Server..."
 /opt/opendj/bin/setup \
  proxy-server \
  --rootUserDN "cn=Directory Manager" \
@@ -28,6 +29,39 @@ echo "Setting up OpenDJ Proxy Server."
  --proxyUserBindPassword "$PASSWORD" \
  --proxyUsingSSL \
  --acceptLicense
+
+echo "Creating Service Discovery Mechanism..."
+/opt/opendj/bin/dsconfig \
+ create-service-discovery-mechanism \
+ --hostname localhost \
+ --port 4444 \
+ --bindDN "cn=Directory Manager" \
+ --bindPassword "$PASSWORD" \
+ --mechanism-name "Static Service Discovery Mechanism" \
+ --type static \
+ --set primary-server:opendjuser-0.opendjuser.dev.svc.cluster.local:1636 \
+ --set use-ssl:true \
+ --set trust-manager-provider:"JVM Trust Manager" \
+ --trustAll \
+ --no-prompt
+
+echo "Creating Backend..."
+/opt/opendj/bin/dsconfig \
+ create-backend \
+ --hostname localhost \
+ --port 4444 \
+ --bindDN "cn=Directory Manager" \
+ --bindPassword "$PASSWORD" \
+ --backend-name proxyAll \
+ --type proxy \
+ --set enabled:true \
+ --set route-all:true \
+ --set proxy-user-dn: "cn=Directory Manager" \
+ --set proxy-user-password: "$PASSWORD" \
+ --set load-balancing-algorithm:least-requests \
+ --set service-discovery-mechanism:"Static Service Discovery Mechanism" \
+ --trustAll \
+ --no-prompt
 
 echo "Set up of OpenDJ Proxy Server complete."
 
