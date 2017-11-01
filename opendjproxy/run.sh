@@ -33,7 +33,7 @@ if [ ! -d ./data/config ] ; then
 #   if [ ! -z ${DJ_MASTER_SERVER+x} ];  then
 #      /opt/opendj/bootstrap/replicate.sh $DJ_MASTER_SERVER
 #   fi
-#fi
+fi
 echo "Running setup..."
 sh /opt/opendj/bootstrap/setup.sh}
 

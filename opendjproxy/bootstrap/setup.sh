@@ -56,8 +56,8 @@ echo "Creating Backend..."
  --type proxy \
  --set enabled:true \
  --set route-all:true \
- --set proxy-user-dn: "cn=Directory Manager" \
- --set proxy-user-password: "$PASSWORD" \
+ --set proxy-user-dn:"cn=Directory Manager" \
+ --set proxy-user-password:"$PASSWORD" \
  --set load-balancing-algorithm:least-requests \
  --set service-discovery-mechanism:"Static Service Discovery Mechanism" \
  --trustAll \
